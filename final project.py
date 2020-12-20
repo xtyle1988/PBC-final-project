@@ -26,7 +26,7 @@ def cat_temp_list(wtb, fd):
     lst = []
     for i in fd:
         tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
-        tp = tp.hashtag.split(',')
+        tp = tp.hashtag.split('|')
         if tp[1] == wtb:
             lst.append(i)
     return lst
@@ -38,9 +38,11 @@ def price_temp_list(p, cat):
         tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
         if p == '價格不拘':
             return cat
-        elif p:
+        elif p == '1000元以下':
             pass
-        elif p:
+        elif p == '1000元~1799元':
+            pass
+        elif p == '1800元以上':
             pass
 
 
