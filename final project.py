@@ -7,7 +7,7 @@ class Clothes:
         self.price = price
         self.pd_link = productLink
         self.img_link = imgLink
-
+#  品牌、性別、款式、風格、價格、連結、圖片
 
 with open(file='C:\\Users\\Sylvia Vanros\\Desktop\\first_version.csv', mode='r', encoding='utf-8') as my_file:
     data = []
@@ -34,14 +34,20 @@ def gen_temp_list(g, d):
 
 
 # create a category data
-def cat_temp_list(wtb, gd):
+def cat_temp_list(wtb, d):  # 類別(want_to_buy, data)
     lst = []
-    for i in gd:
+    set_hashtag = set()
+    for i in d:
         tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
-        tp = tp.hashtag.split('|')
+        tp = tp.hashtag.split('|')  # 從hashtag找出類別
         if tp[1] == wtb:
             lst.append(i)
-    return lst
+            for j in range(len(tp)):  # hashtag的聯集
+                if j == 1:
+                    continue
+                else:
+                    set_hashtag = set_hashtag|{tp[j]}
+    return lst, set_hashtag  # 回傳datalist和hashtag_set
 
 
 # create a price data
@@ -64,6 +70,27 @@ def price_temp_list(p, cat):
     return lst
 
 
+def hashtag_temp_list(h, d):  # 風格(hashtag, data篩到最後一步的)
+    lst = d
+    for k in h:  # 跑每個選取風格
+        key = k  # 此輪篩選風格
+        lst2 = []
+        print(k)
+        for i in lst:  # 跑每個data
+            tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
+            tp = tp.hashtag.split('|')
+            print(tp)
+            for j in range(len(tp)):
+                if j == 1:
+                    continue
+                if tp[j] == key:
+                    lst2.append(i)
+                    break
+        lst = lst2
+        print(len(lst2))
+    return lst2
+
+
 # process input
 gender = input('1. 請優先勾選您的性別: ')
 want_to_buy = input('2. 您想購買什麼(款式): ')
@@ -71,8 +98,8 @@ price = input('3. 您偏好的價格區間: ')
 hashtag = input('4. 您喜歡的風格: ')
 
 gen_data = gen_temp_list(gender, data)
-cat_data = cat_temp_list(want_to_buy, gen_data)
+cat_data, set_hashtag = cat_temp_list(want_to_buy, gen_data)
 price_data = price_temp_list(price, cat_data)
-
+hashtag_data = hashtag_temp_list(hashtag, price_data)
 # print(price_data)
 # print(len(price_data))
