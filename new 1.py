@@ -9,7 +9,7 @@ class Clothes:
         self.pd_link = productLink
 #  品牌、性別、款式、風格、價格、連結、圖片
 
-with open(file='C://Users//Cindy//Downloads//first_version (1).csv', mode='r', encoding='utf-8') as my_file:
+with open(file='C://Users//Cindy//Downloads//sec_version.csv', mode='r', encoding='utf-8') as my_file:
     data = []
     for line in my_file.readlines():
         line = line.strip().split(',')
@@ -21,7 +21,7 @@ gender = input('1. 請優先勾選您的性別: ')
 want_to_buy = input('2. 您想購買什麼(款式): ')
 price = input('3. 您偏好的價格區間: ')
 hashtag = input('4. 您喜歡的風格: ')  # 輸入形式? 以逗號隔開?
-hashtag = hashtag.split(',')
+hashtag = hashtag.split(',')  # list
 
 
 def gen_temp_list(g, d):
@@ -38,7 +38,6 @@ def gen_temp_list(g, d):
     return lst
 
 data = gen_temp_list(gender, data)
-print(data)
 
 def cat_temp_list(wtb, d):  # 類別(want_to_buy, data)
     lst = []
@@ -56,7 +55,7 @@ def cat_temp_list(wtb, d):  # 類別(want_to_buy, data)
     return lst, set_hashtag  # 回傳datalist和hashtag_set
 
 data, set_hashtag = cat_temp_list(want_to_buy, data)
-print(set_hashtag)
+# print(set_hashtag)  # 此種類的風格之聯集
 
 def price_temp_list(p, cat):
     lst = []
@@ -82,13 +81,11 @@ data = price_temp_list(price, data)
 def hashtag_temp_list(h, d):  # 風格(hashtag, data篩到最後一步的)
     lst = d
     for k in h:  # 跑每個選取風格
-        key = k  # 此輪篩選風格
+        key = k  # 此輪篩選之風格
         lst2 = []
-        print(k)
         for i in lst:  # 跑每個data
             tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
             tp = tp.hashtag.split('|')
-            print(tp)
             for j in range(len(tp)):
                 if j == 1:
                     continue
@@ -96,10 +93,12 @@ def hashtag_temp_list(h, d):  # 風格(hashtag, data篩到最後一步的)
                     lst2.append(i)
                     break
         lst = lst2
-        print(len(lst2))
     return lst2
 
-data = hashtag_temp_list(hashtag, data)
+final_data = hashtag_temp_list(hashtag, data)
+# print(len(final_data))
 
-
-
+for i in range(len(final_data)):
+    print(final_data[i][2])  # itemName
+    print(final_data[i][6])  # imgLink
+    print(final_data[i][5])  # productLink
