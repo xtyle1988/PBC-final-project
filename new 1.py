@@ -82,6 +82,9 @@ def hashtag_temp_list(h, d):  # 風格(hashtag, data篩到最後一步的)
     lst = d
     for k in h:  # 跑每個選取風格
         key = k  # 此輪篩選之風格
+        if k == '全部':
+            lst2 = d
+            break
         lst2 = []
         for i in lst:  # 跑每個data
             tp = Clothes(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
