@@ -7,7 +7,7 @@ class Clothes:
         self.img_link = imgLink
         self.price = price
         self.pd_link = productLink
-#  品牌、性別、款式、風格、價格、連結、圖片
+#  品牌、性別、款式、風格、圖片、價格、連結
 
 with open(file='C://Users//Cindy//Downloads//third_version.csv', mode='r', encoding='utf-8') as my_file:
     data = []
@@ -103,5 +103,5 @@ final_data = hashtag_temp_list(hashtag, data)
 
 for i in range(len(final_data)):
     print(final_data[i][2])  # itemName
-    print(final_data[i][6])  # imgLink
-    print(final_data[i][5])  # productLink
+    print(final_data[i][4])  # imgLink
+    print(final_data[i][6])  # productLink
